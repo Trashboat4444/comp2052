@@ -39,7 +39,7 @@ todo_app/
 ✅ API REST integrada (/todos)
 ✅ Código modular y mantenible
 
-## 🔧 Instalación
+## 🔧 Instalación del App
 
 ### Clona el repositorio:
 
