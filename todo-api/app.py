@@ -13,7 +13,8 @@ def home():
     Ruta raíz de la API.
     Retorna un mensaje simple para indicar que el servicio está activo.
     """
-    return "Simple TODO API"
+    # return "Simple TODO API"
+    return render_template('index.html', data={})
 
 @app.route("/todos", methods=["GET"])
 def select_todos():
