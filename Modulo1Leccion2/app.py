@@ -2,11 +2,11 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"])
+@app.route("/info", methods=["GET"])
 def home():
     return "Bienvenido a mi API"
 
-@app.route("/saludo", methods=["POST"])
+@app.route("/mensaje", methods=["POST"])
 def saludo():
     data = request.json
     nombre = data.get("nombre", "Usuario")
