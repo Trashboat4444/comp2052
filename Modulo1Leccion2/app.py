@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/info", methods=["GET"])
 def home():
-    return "Bienvenido a mi API"
+    return "Esto es una Aplicacion Web con dos rutas"
 
 @app.route("/mensaje", methods=["POST"])
 def saludo():
