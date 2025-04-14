@@ -7,7 +7,7 @@ def home():
     return "Esto es una Aplicacion Web con dos rutas"
 
 @app.route("/mensaje", methods=["POST"])
-def saludo():
+def mensaje():
     data = request.json
     nombre = data.get("nombre", "Usuario")
     return f"Hola, {nombre}!"
