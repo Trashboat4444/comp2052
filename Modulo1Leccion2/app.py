@@ -2,8 +2,12 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("/info", methods=["GET"])
+@app.route("/", methods=["GET"])
 def home():
+    return "Bienvenidos a mi API"
+
+@app.route("/info", methods=["GET"])
+def info():
     return "Esto es una Aplicacion Web con dos rutas"
 
 @app.route("/mensaje", methods=["POST"])
