@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mi App Flask{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Mi Aplicación Web</h1>
+        <nav>
+            <a href="/">Inicio</a> |
+            <a href="/usuarios">Usuarios</a> |
+            <a href="/productos">Productos</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Mi App Flask</p>
+    </footer>
+</body>
+</html>
