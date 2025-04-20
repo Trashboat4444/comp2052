@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+# Lista para almacenar usuarios en memoria
+usuarios = []
+
 @app.route("/", methods=["GET"])
 def home():
     return "Bienvenidos a mi API"
@@ -10,15 +13,23 @@ def home():
 def info():
     return "Esto es una Aplicacion Web con tres rutas"
 
-@app.route("/crear_usuario",methods=["POST"])
+
+@app.route("/crear_usuario", methods=["POST"])
 def crear_usuario():
-    data = request.get_json()
-    if not data or 'nombre' not in data:
-        return jsonify({"error": "falta el campo 'nombre' en el JSON"}), 400
-    
-@app.route("/usuarios",methods=["GET"])
-def usuario():
-    
+    data = request.json
+    nombre = data.get("nombre")
+    correo = data.get("correo")
+
+    if not nombre or not correo:
+        return jsonify({"error": "Nombre y correo son obligatorios"}), 400
+
+    nuevo_usuario = {"nombre": nombre, "correo": correo}
+    usuarios.append(nuevo_usuario)
+    return jsonify({"mensaje": "Usuario creado con éxito", "usuario": nuevo_usuario}), 201
+
+@app.route("/usuarios", methods=["GET"])
+def listar_usuarios():
+    return jsonify({"usuarios": usuarios})
 
 if __name__ == "__main__":
     app.run(debug=True)
