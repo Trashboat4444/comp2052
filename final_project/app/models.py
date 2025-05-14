@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Modelo de roles (Admin, Professor, Student, etc.)
+# Modelo de roles (Admin, Editor, Autor, etc.)
 class Role(db.Model):
     __tablename__ = 'role'
     
@@ -27,8 +27,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)  # Asegura suficiente espacio para el hash
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
 
-    # Relación con cursos (si es profesor)
-    cursos = db.relationship('Curso', backref='profesor', lazy=True)
+    # Relación con articulos (si es editor)
+    Articulos = db.relationship('Articulos', backref='editor', lazy=True)
 
     def set_password(self, password: str):
         """
@@ -42,9 +42,9 @@ class User(UserMixin, db.Model):
         """
         return check_password_hash(self.password_hash, password)
 
-# Modelo de curso asociado a un profesor
-class Curso(db.Model):
-    __tablename__ = 'curso'
+# Modelo de articulo asociado a un editor
+class Articulo(db.Model):
+    __tablename__ = 'articulo'
 
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(100), nullable=False)
