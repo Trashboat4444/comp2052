@@ -31,7 +31,7 @@ class ChangePasswordForm(FlaskForm):
     submit = SubmitField('Update Password')
 
 # Formulario para crear o editar un articulo
-class CursoForm(FlaskForm):
+class ArticuloForm(FlaskForm):
     titulo = StringField('Article title', validators=[DataRequired()])
     descripcion = TextAreaField('Body', validators=[DataRequired()])
     submit = SubmitField('Save')

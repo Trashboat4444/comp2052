@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
-from app.forms import CursoForm, ChangePasswordForm
-from app.models import db, Curso, User
+from app.forms import ArticuloForm, ChangePasswordForm
+from app.models import db, Articulo, User
 
 # Blueprint principal que maneja el dashboard, gestión de cursos y cambio de contraseña
 main = Blueprint('main', __name__)
@@ -42,68 +42,68 @@ def dashboard():
     Panel principal del usuario. Muestra los cursos si no es estudiante.
     """
     if current_user.role.name == 'Student': # Change this for your project
-        cursos = Curso.query.all()
+        articulos = Articulo.query.all()
     else:
-        cursos = Curso.query.filter_by(profesor_id=current_user.id).all()
+        cursos = Articulo.query.filter_by(profesor_id=current_user.id).all()
 
-    return render_template('dashboard.html', cursos=cursos)
+    return render_template('dashboard.html', articulos=articulos)
 
-@main.route('/cursos', methods=['GET', 'POST'])
+@main.route('/articulos', methods=['GET', 'POST'])
 @login_required
-def cursos():
+def articulos():
     """
-    Permite crear un nuevo curso. Solo disponible para profesores o admins.
+    Permite crear un nuevo articulo. Solo disponible para editores o admins.
     """
-    form = CursoForm()
+    form = ArticuloForm()
     if form.validate_on_submit():
-        curso = Curso(
+        articulo = Articulo(
             titulo=form.titulo.data,
             descripcion=form.descripcion.data,
             profesor_id=current_user.id
         )
-        db.session.add(curso)
+        db.session.add(articulo)
         db.session.commit()
-        flash("Course created successfully.")  # 🔁 Traducido
+        flash("Article created successfully.")  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
-    return render_template('curso_form.html', form=form)
+    return render_template('articulo_form.html', form=form)
 
-@main.route('/cursos/<int:id>/editar', methods=['GET', 'POST'])
+@main.route('/articulos/<int:id>/editar', methods=['GET', 'POST'])
 @login_required
-def editar_curso(id):
+def editar_articulo(id):
     """
-    Permite editar un curso existente. Solo si es admin o el profesor dueño.
+    Permite editar un articulos existente. Solo si es admin o el editor dueño.
     """
-    curso = Curso.query.get_or_404(id)
+    curso = Articulo.query.get_or_404(id)
 
     # Validación de permisos
-    if current_user.role.name not in ['Admin', 'Professor'] or (
-        curso.profesor_id != current_user.id and current_user.role.name != 'Admin'):
+    if current_user.role.name not in ['Admin', 'Editor'] or (
+        articulo.profesor_id != current_user.id and current_user.role.name != 'Admin'):
         flash('You do not have permission to edit this course.')  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
-    form = CursoForm(obj=curso)
+    form = ArticuloForm(obj=curso)
 
     if form.validate_on_submit():
-        curso.titulo = form.titulo.data
-        curso.descripcion = form.descripcion.data
+        articulo.titulo = form.titulo.data
+        articulo.descripcion = form.descripcion.data
         db.session.commit()
-        flash("Course updated successfully.")  # 🔁 Traducido
+        flash("Article updated successfully.")  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
     return render_template('curso_form.html', form=form, editar=True)
 
-@main.route('/cursos/<int:id>/eliminar', methods=['POST'])
+@main.route('/articulos/<int:id>/eliminar', methods=['POST'])
 @login_required
-def eliminar_curso(id):
+def eliminar_articulo(id):
     """
-    Elimina un curso si el usuario es admin o su profesor creador.
+    Elimina un articulo si el usuario es admin o su editor creador.
     """
-    curso = Curso.query.get_or_404(id)
+    articulo = Articulo.query.get_or_404(id)
 
-    if current_user.role.name not in ['Admin', 'Professor'] or (
-        curso.profesor_id != current_user.id and current_user.role.name != 'Admin'):
-        flash('You do not have permission to delete this course.')  # 🔁 Traducido
+    if current_user.role.name not in ['Admin', 'Editor'] or (
+        articulo.profesor_id != current_user.id and current_user.role.name != 'Admin'):
+        flash('You do not have permission to delete this article.')  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
     db.session.delete(curso)

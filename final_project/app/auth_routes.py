@@ -31,7 +31,7 @@ def login():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     """
-    Registra un nuevo usuario y lo asocia por defecto al rol "Student".
+    Registra un nuevo usuario y lo asocia por defecto al rol "Author".
     """    
     form = RegisterForm()
     
