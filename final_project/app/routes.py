@@ -74,7 +74,7 @@ def editar_articulo(id):
     """
     Permite editar un articulos existente. Solo si es admin o el editor dueño.
     """
-    curso = Articulo.query.get_or_404(id)
+    articulo = Articulo.query.get_or_404(id)
 
     # Validación de permisos
     if current_user.role.name not in ['Admin', 'Editor'] or (
@@ -82,7 +82,7 @@ def editar_articulo(id):
         flash('You do not have permission to edit this course.')  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
-    form = ArticuloForm(obj=curso)
+    form = ArticuloForm(obj=articulo)
 
     if form.validate_on_submit():
         articulo.titulo = form.titulo.data
@@ -106,7 +106,7 @@ def eliminar_articulo(id):
         flash('You do not have permission to delete this article.')  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
-    db.session.delete(curso)
+    db.session.delete(articulo)
     db.session.commit()
     flash("Course deleted successfully.")  # 🔁 Traducido
     return redirect(url_for('main.dashboard'))
