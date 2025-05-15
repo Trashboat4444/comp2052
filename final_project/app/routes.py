@@ -41,7 +41,7 @@ def dashboard():
     """
     Panel principal del usuario. Muestra los cursos si no es estudiante.
     """
-    if current_user.role.name == 'Student': # Change this for your project
+    if current_user.role.name == 'Author': # Change this for your project
         articulos = Articulo.query.all()
     else:
         cursos = Articulo.query.filter_by(profesor_id=current_user.id).all()
@@ -108,7 +108,7 @@ def eliminar_articulo(id):
 
     db.session.delete(articulo)
     db.session.commit()
-    flash("Course deleted successfully.")  # 🔁 Traducido
+    flash("Article deleted successfully.")  # 🔁 Traducido
     return redirect(url_for('main.dashboard'))
 
 @main.route('/usuarios')

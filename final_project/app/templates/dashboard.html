@@ -2,12 +2,12 @@
 content %}
 <div class="row">
   <div class="col">
-    <h3>Course Management</h3>
+    <h3>Article Management</h3>
   </div>
   <div class="col text-end">
     <!-- Change the next line for your project -->
-    {% if current_user.role.name != 'Student' %}
-    <a class="btn btn-primary mb-3 me-2" href="{{ url_for('main.cursos') }}">
+    {% if current_user.role.name != 'Author' %}
+    <a class="btn btn-primary mb-3 me-2" href="{{ url_for('main.articulos') }}">
       <i class="bi bi-plus"></i> New
     </a>
     {% endif %}
@@ -18,38 +18,38 @@ content %}
   <thead class="table-light">
     <tr>
       <th>Title</th>
-      <th>Description</th>
-      <th>Instructor</th>
+      <th>Body</th>
+      <th>Editor</th>
       <th class="text-center">Actions</th>
     </tr>
   </thead>
   <tbody>
-    {% for curso in cursos %}
+    {% for articulo in articulos %}
     <tr>
-      <td>{{ curso.titulo }}</td>
-      <td>{{ curso.descripcion }}</td>
-      <td>{{ curso.profesor.username }}</td>
+      <td>{{ articulo.titulo }}</td>
+      <td>{{ articulo.descripcion }}</td>
+      <td>{{ articulo.profesor.username }}</td>
       <td class="text-center ps-0 pe-0">
-        {% if current_user.role.name == 'Admin' or curso.profesor_id ==
+        {% if current_user.role.name == 'Admin' or articulo.profesor_id ==
         current_user.id %}
 
         <a
           class="btn btn-sm btn-warning"
-          href="{{ url_for('main.editar_curso', id=curso.id) }}"
-          title="Edit course"
+          href="{{ url_for('main.editar_articulo', id=articulo.id) }}"
+          title="Edit article"
         >
           <i class="bi bi-pencil"></i>
         </a>
         <form
           method="POST"
-          action="{{ url_for('main.eliminar_curso', id=curso.id) }}"
+          action="{{ url_for('main.eliminar_articulo', id=articulo.id) }}"
           style="display: inline"
-          onsubmit="return confirm('Are you sure you want to delete this course?');"
+          onsubmit="return confirm('Are you sure you want to delete this article?');"
         >
           <button
             type="submit"
             class="btn btn-sm btn-danger"
-            title="Delete course"
+            title="Delete article"
           >
             <i class="bi bi-trash"></i>
           </button>
@@ -64,7 +64,7 @@ content %}
 </table>
 
 <!-- Change the next line for your project -->
-{% if current_user.role.name == 'Student' %}
+{% if current_user.role.name == 'Author' %}
 <p class="text-center pe-3 mt-0 text-body-tertiary fw-lighter fst-italic">
   You do not have permission to create, update or delete courses.
 </p>

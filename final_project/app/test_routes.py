@@ -56,7 +56,7 @@ def crear_articulo():
 
     articulo = Articulo(
         titulo=data.get('titulo'),
-        descripcion=data.get('descripcion'),
+        descripcion=data.get('cuerpo'),
         profesor_id=data.get('profesor_id')  # sin validación de usuario
     )
 
