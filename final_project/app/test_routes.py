@@ -20,14 +20,14 @@ def listar_articulos():
     articulos = Articulo.query.all()
 
     data = [
-        {'id': curso.id, 'titulo': curso.titulo, 'descripcion': curso.descripcion, 'profesor_id': curso.profesor_id}
-        for curso in articulos
+        {'id': articulo.id, 'titulo': articulo.titulo, 'cuerpo': articulo.descripcion, 'profesor_id': articulo.profesor_id}
+        for articulo in articulos
     ]
     return jsonify(data), 200
 
 
 @main.route('/articulos/<int:id>', methods=['GET'])
-def listar_un_curso(id):
+def listar_un_articulo(id):
     """
     Retorna un solo articulo por su ID (JSON).
     """
@@ -44,9 +44,9 @@ def listar_un_curso(id):
 
 
 @main.route('/articulos', methods=['POST'])
-def crear_curso():
+def crear_articulo():
     """
-    Crea un curso sin validación.
+    Crea un articulo sin validación.
     Espera JSON con 'titulo', 'descripcion' y 'profesor_id'.
     """
     data = request.get_json()
@@ -66,7 +66,7 @@ def crear_curso():
     return jsonify({'message': 'Articulo creado', 'id': articulo.id, 'profesor_id': articulo.profesor_id}), 201
 
 @main.route('/articulos/<int:id>', methods=['PUT'])
-def actualizar_curso(id):
+def actualizar_articulo(id):
     """
     Actualiza un articulo sin validación de usuario o permisos.
     """
@@ -79,7 +79,7 @@ def actualizar_curso(id):
 
     db.session.commit()
 
-    return jsonify({'message': 'Curso actualizado', 'id': articulo.id}), 200
+    return jsonify({'message': 'Articulo actualizado', 'id': articulo.id}), 200
 
 @main.route('/articulos/<int:id>', methods=['DELETE'])
 def eliminar_articulo(id):
