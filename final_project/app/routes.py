@@ -91,7 +91,7 @@ def editar_articulo(id):
         flash("Article updated successfully.")  # 🔁 Traducido
         return redirect(url_for('main.dashboard'))
 
-    return render_template('curso_form.html', form=form, editar=True)
+    return render_template('articulo_form.html', form=form, editar=True)
 
 @main.route('/articulos/<int:id>/eliminar', methods=['POST'])
 @login_required
